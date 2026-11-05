@@ -6,7 +6,10 @@ import cors from "cors";
 
 const app = express();
 const PORT = 8000;
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true,
+}));
 app.use(express.json());
 
 
@@ -26,6 +29,7 @@ export async function connectToMongoDB() {
 const connectClient = await connectToMongoDB();
 const db = connectClient.db("cat-hermione");
 const collectionEvent = db.collection("event");
+const joinCollection = db.collection("join");
 
 app.post("/add-event", async (req, res) => {
   const data = req.body;
@@ -66,6 +70,22 @@ app.delete("/events/:id", async (req , res)=>{
   res.json(result);
 });
 
+app.post("/join-event", async (req, res) => {
+  const data = req.body;
+  const result = await joinCollection.insertOne(data);
+  res.send(result);
+});
+
+
+app.get("/join-event/:email", async (req, res) => {
+  const { email } = req.params;
+
+  const result = await joinCollection.find({
+    useremail: email
+  }).toArray();
+
+  res.send(result);
+});
 
 // app.get("/add-event", (req, res) => {
 //   res.send("Add Event API is working!");
