@@ -87,9 +87,8 @@ app.get("/join-event/:email", async (req, res) => {
   res.send(result);
 });
 
-// app.get("/add-event", (req, res) => {
-//   res.send("Add Event API is working!");
-// });
+
+
 
 //localhost:8000/
 app.get("/", (req, res) => {
