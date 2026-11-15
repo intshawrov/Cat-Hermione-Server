@@ -7,7 +7,8 @@ import cors from "cors";
 const app = express();
 const PORT = 8000;
 app.use(cors({
-  origin: process.env.CLIENT_URI,
+  // Comma-separated list of allowed origins (set in the environment).
+  origin: process.env.CLIENT_URI ? process.env.CLIENT_URI.split(",") : true,
   credentials: true,
 }));
 app.use(express.json());
