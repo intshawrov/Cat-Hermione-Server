@@ -7,7 +7,7 @@ import cors from "cors";
 const app = express();
 const PORT = 8000;
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: process.env.CLIENT_URI,
   credentials: true,
 }));
 app.use(express.json());
@@ -89,7 +89,6 @@ app.get("/join-event/:email", async (req, res) => {
 
 
 
-
 //localhost:8000/
 app.get("/", (req, res) => {
   res.send({ message: "I'm already started working on my assignment-8" });
@@ -98,3 +97,5 @@ app.get("/", (req, res) => {
 app.listen(PORT, (req, res) => {
   console.log(`Server is running at ${PORT}`);
 });
+
+export default app;
