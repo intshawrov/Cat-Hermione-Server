@@ -26,6 +26,8 @@ export async function connectToMongoDB() {
   }
 }
 
+
+
 const connectClient = await connectToMongoDB();
 const db = connectClient.db("cat-hermione");
 const collectionEvent = db.collection("event");
@@ -94,8 +96,11 @@ app.get("/", (req, res) => {
   res.send({ message: "I'm already started working on my assignment-8" });
 })
 
-app.listen(PORT, (req, res) => {
-  console.log(`Server is running at ${PORT}`);
-});
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log(`Server is running at ${PORT}`);
+  });
+}
 
 export default app;
+
